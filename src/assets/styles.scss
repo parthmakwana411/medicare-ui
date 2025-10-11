@@ -3,3 +3,11 @@
 @use './layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
+
+.p-dock-list-container {
+    position: fixed !important;
+    bottom: 10px !important;
+    width: fit-content !important;
+    background: lightgray !important;
+    padding: 0 !important;
+}
