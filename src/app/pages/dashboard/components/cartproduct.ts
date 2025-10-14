@@ -2,15 +2,15 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { DataView } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '@/pages/service/product.service';
 import { InputNumber } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { MedicineService } from '@/pages/service/medicine.service';
 
 @Component({
     standalone: true,
     selector: 'cart-product',
     imports: [DataView, ButtonModule, CommonModule, FormsModule, InputNumber],
-    providers: [ProductService],
+    providers: [MedicineService],
     template: `
     <div class="card">
     <p-dataview #dv [value]="products()">
@@ -87,10 +87,10 @@ export class CartProduct implements OnInit {
 
     products = signal<any>([]);
 
-    productService = inject(ProductService);
+    medicineService = inject(MedicineService);
 
     ngOnInit() {
-        this.productService.getProducts().then((data) => {
+        this.medicineService.getProducts().then((data) => {
             const d = data.slice(0, 5);
             this.products.set([...d])
         });
