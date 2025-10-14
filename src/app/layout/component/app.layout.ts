@@ -6,12 +6,13 @@ import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
+import { BottomDock } from "@/pages/dashboard/components/bottom.dock";
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
-    template: `<div class="layout-wrapper" [ngClass]="containerClass">
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter, BottomDock],
+    template: `<div class="layout-wrapper bg-white" [ngClass]="containerClass">
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>
         <div class="layout-main-container">
@@ -20,8 +21,17 @@ import { LayoutService } from '../service/layout.service';
             </div>
             <app-footer></app-footer>
         </div>
+        <div class="col-span-12 bottom-dock block lg:hidden">
+            <app-bottom-dock />
+        </div>
         <div class="layout-mask animate-fadein"></div>
-    </div> `
+    </div> `,
+    styles: `
+    .bottom-dock {
+        position : sticky ;
+        bottom : 0 ;
+    }
+    `
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;

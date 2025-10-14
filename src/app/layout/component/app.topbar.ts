@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../service/layout.service';
@@ -29,7 +29,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
                     <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
                 </button>
 
-                <p-button icon="pi pi-shopping-cart" severity="info" text raised rounded outlined />
+                <p-button icon="pi pi-shopping-cart" (click)="onCart()" severity="info" text raised rounded outlined />
             </div>
 
         </div>
@@ -38,9 +38,13 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
 export class AppTopbar {
     items!: MenuItem[];
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(public layoutService: LayoutService, public router: Router) {}
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+    }
+
+    onCart(){
+        this.router.navigate(['/cart']);
     }
 }

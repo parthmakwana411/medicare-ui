@@ -1,26 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Dock } from 'primeng/dock';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabsModule } from 'primeng/tabs';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-bottom-dock',
-    imports: [Dock, CommonModule, FormsModule, TooltipModule],
+    imports: [CommonModule, FormsModule, TooltipModule, TabsModule, RouterModule],
     template: `
-        <div class="card">
-            <div class="dock-window">
-                <p-dock [model]="items" [position]="'bottom'">
-                    <ng-template #item let-item>
-                        <div class="dock-item flex flex-col items-center justify-center text-center p-2 h-auto overflow-visible whitespace-nowrap">
-                            <i [ngClass]="item.icon" class="text-2xl mb-1" [pTooltip]="item.label" tooltipPosition="top"></i>
-                        </div>
-                    </ng-template>
-                </p-dock>
-            </div>
+        <div class="card" style="padding:0">
+            <p-tabs value="/">
+                <p-tablist>
+                    @for (item of items; track item) {
+                        <p-tab class="flex flex-col items-center justify-center !gap-1 text-inherit" [routerLink]="item['route']">
+                            <i [class]="item.icon" class="text-lg"></i>
+                            <span class="text-sm">{{ item.label }}</span>
+                        </p-tab>
+                    }
+                </p-tablist>
+            </p-tabs>
         </div>
     `,
+    styles:`
+    ::ng-deep .p-tablist-tab-list {
+        justify-content : space-evenly
+    }
+    `
 })
 export class BottomDock {
     items: MenuItem[] | undefined;
@@ -29,19 +36,23 @@ export class BottomDock {
         this.items = [
             {
                 label: 'Home',
-                icon: 'pi pi-home'
+                icon: 'pi pi-home',
+                route: ''
             },
             {
                 label: 'Categories',
-                icon: 'pi pi-objects-column'
+                icon: 'pi pi-objects-column',
+                route: '/category'
             },
             {
                 label: 'Orders',
-                icon: 'pi pi-book'
+                icon: 'pi pi-book',
+                route: ''
             },
             {
                 label: 'Account',
-                icon: 'pi pi-user'
+                icon: 'pi pi-user',
+                route: '/auth/login'
             }
         ];
     }

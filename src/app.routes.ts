@@ -4,6 +4,8 @@ import { Dashboard } from './app/pages/dashboard/dashboard';
 import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
+import { MedicineCategory } from '@/pages/dashboard/medicine.category';
+import { Cart } from '@/pages/dashboard/cart';
 
 export const appRoutes: Routes = [
     {
@@ -13,6 +15,8 @@ export const appRoutes: Routes = [
             { path: '', component: Dashboard },
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
+            { path: 'category', component: MedicineCategory },
+            { path: 'cart', component: Cart},
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
         ]
     },
