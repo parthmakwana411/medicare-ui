@@ -19,7 +19,7 @@ import { MedicineService } from '@/pages/service/medicine.service';
             <div class="grid grid-cols-12 gap-4 grid-nogutter">
                 <div class="col-span-12" *ngFor="let item of items; let first = first">
                     <div class="flex flex-col items-end">
-                        <p-button icon="pi pi-heart" [outlined]="true" />
+                        <p-button icon="pi pi-times" [outlined]="true" />
                     </div>
                     <div
                         class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
@@ -38,19 +38,11 @@ import { MedicineService } from '@/pages/service/medicine.service';
                                 <div>
                                     <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{ item.name }}</div>
                                 </div>
-                                <div class="bg-surface-100 dark:bg-surface-700 p-1" style="border-radius: 30px">
-                                    <div
-                                        class="bg-surface-0 dark:bg-surface-900 flex items-center gap-2 justify-center py-1 px-2"
-                                        style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)"
-                                    >
-                                    </div>
-                                </div>
                             </div>
                             <div class="flex flex-col md:items-end gap-8">
                                 
-                                <div class="flex justify-between md:flex-row-reverse md:flex-row gap-2">
-                                    <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{
-                                    '₹ ' + item.price
+                                <div class="flex justify-between md:flex-row gap-2">
+                                    <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{'₹ ' + item.price
                                 }}</span>
 
                                     <div>

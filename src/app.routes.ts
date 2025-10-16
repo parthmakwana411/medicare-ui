@@ -6,6 +6,7 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { MedicineCategory } from '@/pages/dashboard/medicine.category';
 import { Cart } from '@/pages/dashboard/cart';
+import { OrdersListComponent } from '@/pages/dashboard/orders';
 
 export const appRoutes: Routes = [
     {
@@ -16,7 +17,8 @@ export const appRoutes: Routes = [
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
             { path: 'category', component: MedicineCategory },
-            { path: 'cart', component: Cart},
+            { path: 'cart', component: Cart },
+            { path: 'orders', component: OrdersListComponent },
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
         ]
     },

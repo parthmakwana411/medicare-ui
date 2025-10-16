@@ -29,7 +29,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
                     <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
                 </button>
 
-                <p-button icon="pi pi-shopping-cart" (click)="onCart()" severity="info" text raised rounded outlined />
+                <p-button icon="pi pi-shopping-cart" (click)="onCart()" severity="info" text rounded outlined />
             </div>
 
         </div>
