@@ -145,7 +145,7 @@ export class Cart implements OnInit {
         if (existing) {
             existing.quantity += 1;
         } else {
-            this.cartItems.update((prev) => [...prev, { id: Date.now().toString(), name: med.name, image: '', price: 100, quantity: 1 }]);
+            this.cartItems.update((prev) => [...prev, { id: Date.now().toString(), name: med.name, image: 'https://assets.truemeds.in/Images/ProductImage/TM-STPS1-000077/dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50_dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50--TM-STPS1-000077_1.png?width=240', price: 100, quantity: 1 }]);
         }
         this.messageService.add({ summary: `${med.name} added to cart`, severity: 'success', life: 2000 });
     }
