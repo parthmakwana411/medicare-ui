@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { DataView } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '@/pages/service/product.service';
 import { InputNumber } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 import { MedicineService } from '@/pages/service/medicine.service';
@@ -87,10 +88,10 @@ export class CartProduct implements OnInit {
 
     products = signal<any>([]);
 
-    medicineService = inject(MedicineService);
+    productService = inject(MedicineService);
 
     ngOnInit() {
-        this.medicineService.getProducts().then((data) => {
+        this.productService.getProducts().then((data) => {
             const d = data.slice(0, 5);
             this.products.set([...d])
         });
