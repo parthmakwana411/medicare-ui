@@ -39,13 +39,13 @@ export class DashboardProduct {
             image: 'https://assets.truemeds.in/Images/HomepageImage/Picture_1698138124558_3.png?width=240',
             name: 'Diabetes Care'
         },
-        {
-            image: 'https://assets.truemeds.in/Images/HomepageImage/Picture_1698138117087_2.png?width=240',
-            name: 'Health Conditions'
-        },
-        {
-            image: 'https://assets.truemeds.in/Images/HomepageImage/Picture_1698138141109_5.png?width=240',
-            name: 'Vitamins & Supplements'
-        }
+        // {
+        //     image: 'https://assets.truemeds.in/Images/HomepageImage/Picture_1698138117087_2.png?width=240',
+        //     name: 'Health Conditions'
+        // },
+        // {
+        //     image: 'https://assets.truemeds.in/Images/HomepageImage/Picture_1698138141109_5.png?width=240',
+        //     name: 'Vitamins & Supplements'
+        // }
     ];
 }
