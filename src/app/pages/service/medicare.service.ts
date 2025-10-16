@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MedicareService {
-  private baseUrl = 'https://medicare-be.vercel.app';
+  private baseUrl = 'https://medicare-be-1.onrender.com';
 
   constructor(private http: HttpClient) {}
 

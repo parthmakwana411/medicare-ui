@@ -89,7 +89,7 @@ export class AccountComponent implements OnInit {
     this.loading = true;
     this.medicare.getUserDetails().subscribe({
       next: (res) => {
-        this.user = res || this.user;
+        this.user = res?.user || this.user;
         this.loading = false;
       },
       error: () => {
