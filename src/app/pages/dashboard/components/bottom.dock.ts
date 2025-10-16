@@ -41,7 +41,7 @@ export class BottomDock implements OnInit {
             { label: 'Home', icon: 'pi pi-home', route: '/' },
             { label: 'Categories', icon: 'pi pi-objects-column', route: '/category' },
             { label: 'Orders', icon: 'pi pi-book', route: '/orders' },
-            { label: 'Account', icon: 'pi pi-user', route: '/auth/login' }
+            { label: 'Account', icon: 'pi pi-user', route: '/account' }
         ];
     }
 }
