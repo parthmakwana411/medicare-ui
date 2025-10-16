@@ -45,11 +45,10 @@ import { CarouseImage } from "./components/carouselmage";
                                 </div>
                             </div>
                             <div class="flex flex-col md:items-end gap-8">
-                                <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{
-                                    '₹ ' + item.price
-                                }}</span>
+                                
                                 <div class="flex justify-between md:flex-row-reverse gap-2">
-                                    <p-button icon="pi pi-heart" [outlined]="true" />
+                                    <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{
+                                    '₹ ' + item.price }}</span>
 
                                     <div>
                                         <p-button *ngIf="cartcount == 0"

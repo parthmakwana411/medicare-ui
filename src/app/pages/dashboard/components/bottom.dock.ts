@@ -8,52 +8,40 @@ import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-bottom-dock',
+    standalone: true,
     imports: [CommonModule, FormsModule, TooltipModule, TabsModule, RouterModule],
     template: `
         <div class="card" style="padding:0">
-            <p-tabs value="/">
-                <p-tablist>
-                    @for (item of items; track item) {
-                        <p-tab class="flex flex-col items-center justify-center !gap-1 text-inherit" [routerLink]="item['route']">
-                            <i [class]="item.icon" class="text-lg"></i>
-                            <span class="text-sm">{{ item.label }}</span>
-                        </p-tab>
-                    }
-                </p-tablist>
-            </p-tabs>
+            <div class="flex justify-evenly">
+                <ng-container *ngFor="let item of items">
+                    <a
+                        [routerLink]="item['route']"
+                        routerLinkActive="active-tab"
+                        class="flex flex-col items-center justify-center py-2 w-full text-gray-600 hover:text-primary transition-all"
+                    >
+                        <i [class]="item.icon" class="text-lg"></i>
+                        <span class="text-sm">{{ item.label }}</span>
+                    </a>
+                </ng-container>
+            </div>
         </div>
     `,
-    styles:`
-    ::ng-deep .p-tablist-tab-list {
-        justify-content : space-evenly
-    }
-    `
+    styles: [`
+        .active-tab {
+            color: var(--p-primary-color);
+            font-weight: 600;
+        }
+    `]
 })
-export class BottomDock {
-    items: MenuItem[] | undefined;
+export class BottomDock implements OnInit {
+    items: MenuItem[] = [];
 
     ngOnInit() {
         this.items = [
-            {
-                label: 'Home',
-                icon: 'pi pi-home',
-                route: ''
-            },
-            {
-                label: 'Categories',
-                icon: 'pi pi-objects-column',
-                route: '/category'
-            },
-            {
-                label: 'Orders',
-                icon: 'pi pi-book',
-                route: ''
-            },
-            {
-                label: 'Account',
-                icon: 'pi pi-user',
-                route: '/auth/login'
-            }
+            { label: 'Home', icon: 'pi pi-home', route: '/' },
+            { label: 'Categories', icon: 'pi pi-objects-column', route: '/category' },
+            { label: 'Orders', icon: 'pi pi-book', route: '/orders' },
+            { label: 'Account', icon: 'pi pi-user', route: '/auth/login' }
         ];
     }
 }

@@ -41,7 +41,7 @@ export class CarouseImage {
             image: 'https://assets.truemeds.in/Images/BannerImages/BannerImage_02_08_031_14_Sep_2025.png',
         },
         {
-            image: 'https://assets.truemeds.in/Images/BannerImages/BannerImage_06_09_000_06_Oct_2025.png',
+            image: 'https://assets.truemeds.in/Images/BannerImages/BannerImage_12_36_035_15_Jul_2025.png',
         }
     ];
     responsiveOptions: any[] | undefined;

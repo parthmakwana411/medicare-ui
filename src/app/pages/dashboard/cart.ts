@@ -17,9 +17,6 @@ import { MessageService } from 'primeng/api';
         </div>
     </ng-template>
     <div class="col-span-12 xl:col-span-12">
-        @if(isActiveProceed){
-            <span class="font-bold text-xl">Last Order</span>
-        }
         <cart-product />
     </div>
     <ng-template #footer>
@@ -35,6 +32,16 @@ import { MessageService } from 'primeng/api';
     </div>
     `,
     standalone: true,
+    styles: `
+
+    ::ng-deep .p-drawer-header {
+      border-bottom : 1px grey solid 
+    }
+
+    ::ng-deep .p-drawer-footer {
+       border-top : 1px grey solid  
+    }
+    `,
     imports: [DrawerModule, ButtonModule, CartProduct]
 })
 export class Cart {
