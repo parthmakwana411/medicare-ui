@@ -7,6 +7,8 @@ import { Notfound } from './app/pages/notfound/notfound';
 import { MedicineCategory } from '@/pages/dashboard/medicine.category';
 import { Cart } from '@/pages/dashboard/cart';
 import { OrdersListComponent } from '@/pages/dashboard/orders';
+import { AccountComponent } from '@/pages/dashboard/account';
+import { AdminDashboard } from '@/pages/dashboard/admindashboard';
 
 export const appRoutes: Routes = [
     {
@@ -19,6 +21,8 @@ export const appRoutes: Routes = [
             { path: 'category', component: MedicineCategory },
             { path: 'cart', component: Cart },
             { path: 'orders', component: OrdersListComponent },
+            { path: 'account', component: AccountComponent },
+            { path: 'admin-dashboard', component: AdminDashboard },
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
         ]
     },
