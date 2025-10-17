@@ -9,6 +9,8 @@ import { Cart } from '@/pages/dashboard/cart';
 import { OrdersListComponent } from '@/pages/dashboard/orders';
 import { AccountComponent } from '@/pages/dashboard/account';
 import { authGuard } from '@/pages/auth/auth.guard';
+import { AdminDashboard } from '@/pages/dashboard/admindashboard';
+import { OrdersPageComponent } from '@/pages/dashboard/oreders-page';
 
 export const appRoutes: Routes = [
     {
@@ -16,6 +18,8 @@ export const appRoutes: Routes = [
         component: AppLayout,
         children: [
             { path: '', component: Dashboard },
+            { path: 'admin-dashboard', component: AdminDashboard },
+            { path: 'order-details', component: OrdersPageComponent },
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
             { path: 'category', component: MedicineCategory },

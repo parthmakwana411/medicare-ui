@@ -108,7 +108,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   getTrackingSteps(status: string) {
-    const allSteps = ['Order Placed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered'];
+    const allSteps = ['Order Placed','Out for Delivery', 'Delivered'];
     const currentIndex = allSteps.indexOf(status);
     return allSteps.map((label, i) => ({ label, done: i <= currentIndex }));
   }
