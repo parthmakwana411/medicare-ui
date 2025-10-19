@@ -13,11 +13,11 @@ import { MedicareService } from '../service/medicare.service';
   imports: [FormsModule, InputTextModule, ButtonModule, CardModule, ToastModule],
   providers: [MessageService, MedicareService],
   template: `
-    <div class="flex items-center justify-center min-h-screen bg-gray-50 px-4">
-      <div class="bg-white shadow-xl rounded-3xl w-full max-w-md p-6">
+    <div class="flex justify-center min-h-screen px-4">
+      <div class="bg-white rounded-3xl w-full max-w-md">
         <p-toast />
 
-        <h2 class="text-2xl font-semibold mb-4 text-center">My Account</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-center">My Details</h2>
 
         <form #form="ngForm" (ngSubmit)="updateDetails()" class="space-y-4">
           <div>
@@ -54,6 +54,7 @@ import { MedicareService } from '../service/medicare.service';
               name="address"
               rows="3"
               class="w-full"
+              required
               placeholder="Enter your address"
             ></textarea>
           </div>

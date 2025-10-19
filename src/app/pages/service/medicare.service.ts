@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class MedicareService {
-    private baseUrl = 'https://medicare-be-1.onrender.com';
+    private baseUrl = 'https://ediare--deep357216-tw665tqx.leapcell.dev';
 
     constructor(private http: HttpClient) {}
 

@@ -15,18 +15,20 @@ import { MedicareService } from '../service/medicare.service';
     providers: [MessageService],
     template: `
         <div class="flex flex-wrap gap-4">
-            <div *ngFor="let order of orders" class="card p-4 w-full sm:w-1/2 lg:w-1/3 border shadow-md">
-                <h3 class="text-lg font-semibold mb-2">Order ID: {{ order.order_id }}</h3>
-                <p><strong>Phone:</strong> {{ order.phone }}</p>
-                <p><strong>Status:</strong> {{ order.status }}</p>
-                <p><strong>Created At:</strong> {{ order.created_at | date: 'short' }}</p>
+            <div *ngFor="let order of orders" class="card p-4 w-full border shadow-md">
+                <h5 class="text-lg font-semibold mb-2">Order ID: {{ order?.order_id }}</h5>
+                <p><strong>Deliver to: </strong> {{ order?.user?.name }}</p>
+                <p><strong>Phone: </strong> {{ order?.user?.phone }}</p>
+                <p><strong>Status: </strong> {{ order?.status }}</p>
+                <p><strong>Delivery Address: </strong> {{ order?.user?.address }}</p>
+                <p><strong>Order Time: </strong> {{ order?.created_at | date: 'short' }}</p>
 
                 <div class="flex flex-col gap-2 mt-4">
                     <!-- Out for Delivery button -->
                     <button *ngIf="order.status === 'Order Placed'" pButton type="button" label="Out for Delivery" class="p-button-sm p-button-warning" (click)="markOutForDelivery(order)"></button>
 
                     <!-- Send OTP button -->
-                    <button *ngIf="order.status !== 'Delivered'" pButton type="button" label="Send OTP" class="p-button-sm p-button-info" (click)="openOtpDialog(order)"></button>
+                    <button *ngIf="order.status === 'Out of Delivery'" pButton type="button" label="Send OTP" class="p-button-sm p-button-info" (click)="openOtpDialog(order)"></button>
                 </div>
             </div>
         </div>
@@ -40,7 +42,8 @@ import { MedicareService } from '../service/medicare.service';
                 </div>
 
                 <!-- Verify Button Full Width -->
-                <div class="w-full">
+                <div class="w-full lex flex-col sm:flex-row gap-3">
+                    <button pButton type="button" label="Resend OTP" class="p-button-secondary flex-1" (click)="resendOtp(currentOrder)"></button>
                     <button pButton type="button" label="Verify" class="p-button-success w-full" (click)="verifyOtp(currentOrder)"></button>
                 </div>
             </div>
@@ -75,11 +78,11 @@ export class OrdersPageComponent implements OnInit {
     }
 
     markOutForDelivery(order: any): void {
-        this.medicareService.updateOrderStatus(order.order_id, 'Out for Delivery').subscribe({
+        this.medicareService.updateOrderStatus(order.order_id, 'Out of Delivery').subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
-                    summary: `Order ${order.order_id} marked Out for Delivery`,
+                    summary: `Order ${order.order_id} Out of Delivery`,
                     life: 3000
                 });
                 this.loadOrders();
@@ -108,6 +111,28 @@ export class OrdersPageComponent implements OnInit {
             error: (err) => {
                 console.error('Failed to send OTP', err);
                 this.messageService.add({ severity: 'error', summary: 'Failed to send OTP', life: 3000 });
+            }
+        });
+    }
+
+    resendOtp(order: any): void {
+        if (!order) return;
+
+        this.medicareService.sendDeliveryOtp(order.order_id).subscribe({
+            next: () => {
+                this.messageService.add({
+                    severity: 'info',
+                    summary: `OTP resent for order ${order.order_id}`,
+                    life: 3000
+                });
+            },
+            error: (err) => {
+                console.error('Failed to resend OTP', err);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Failed to resend OTP',
+                    life: 3000
+                });
             }
         });
     }

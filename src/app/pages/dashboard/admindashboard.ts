@@ -9,10 +9,10 @@ import { RecentSalesWidget } from './components/recentsaleswidget';
     template: `
         <div class="grid grid-cols-12 gap-8">
             <app-stats-widget class="contents" />
-            <div class="col-span-12 xl:col-span-6">
+            <div class="col-span-12 xl:col-span-12">
                 <app-recent-sales-widget />
             </div>
-            <div class="col-span-12 xl:col-span-6">
+            <div class="col-span-12 xl:col-span-12">
                 <app-notifications-widget />
             </div>
         </div>

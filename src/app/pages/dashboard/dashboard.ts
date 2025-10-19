@@ -18,7 +18,7 @@ import { DashboardProduct } from './components/productDashboard';
                 </p-iconfield>
             </div>
 
-            <div class="col-span-12 xl:col-span-12">
+            <div class="col-span-12 xl:col-span-12 block lg:hidden">
                <carouse-image></carouse-image>
             </div>
 

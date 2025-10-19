@@ -22,7 +22,7 @@ import { firstValueFrom } from 'rxjs';
               'bg-green-100 text-green-700': order.status === 'Delivered',
               'bg-blue-100 text-blue-700': order.status === 'Shipped',
               'bg-yellow-100 text-yellow-700': order.status === 'Processing',
-              'bg-orange-100 text-orange-700': order.status === 'Out for Delivery',
+              'bg-orange-100 text-orange-700': order.status === 'Out of Delivery',
               'bg-gray-100 text-gray-700': order.status === 'Order Placed'
             }">
             {{ order.status }}
@@ -108,7 +108,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   getTrackingSteps(status: string) {
-    const allSteps = ['Order Placed','Out for Delivery', 'Delivered'];
+    const allSteps = ['Order Placed','Out of Delivery', 'Delivered'];
     const currentIndex = allSteps.indexOf(status);
     return allSteps.map((label, i) => ({ label, done: i <= currentIndex }));
   }

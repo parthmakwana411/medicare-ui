@@ -100,8 +100,7 @@ interface CartItem {
     `
 })
 export class Cart implements OnInit {
-
-  constructor(public router: Router) {}
+    constructor(public router: Router) {}
 
     messageService = inject(MessageService);
     private medicareService = inject(MedicareService);
@@ -145,7 +144,16 @@ export class Cart implements OnInit {
         if (existing) {
             existing.quantity += 1;
         } else {
-            this.cartItems.update((prev) => [...prev, { id: Date.now().toString(), name: med.name, image: 'https://assets.truemeds.in/Images/ProductImage/TM-STPS1-000077/dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50_dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50--TM-STPS1-000077_1.png?width=240', price: 100, quantity: 1 }]);
+            this.cartItems.update((prev) => [
+                ...prev,
+                {
+                    id: Date.now().toString(),
+                    name: med.name,
+                    image: 'https://assets.truemeds.in/Images/ProductImage/TM-STPS1-000077/dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50_dr-morepen-gluco-one-bg-03-blood-glucose-test-strip-50--TM-STPS1-000077_1.png?width=240',
+                    price: 100,
+                    quantity: 1
+                }
+            ]);
         }
         this.messageService.add({ summary: `${med.name} added to cart`, severity: 'success', life: 2000 });
     }
@@ -165,23 +173,29 @@ export class Cart implements OnInit {
     }
 
     async onProceed() {
-  if (this.cartItems().length === 0) return;
+        if (this.cartItems().length === 0) return;
+        const userDetails = await firstValueFrom(this.medicareService.getUserDetails());
 
-  try {
-    // Prepare order payload
+        if ( !userDetails?.user?.name || !userDetails?.user?.email || !userDetails?.user?.address ) {
+            this.messageService.add({ summary: 'Please update the user details !', severity: 'success', life: 3000 });
+            this.router.navigate(['/account']);
+            return
+        }
+        
+        try {
+            // Prepare order payload
 
-    // Call API
-    const result = await firstValueFrom(this.medicareService.placeOrder(''));
-    console.log('Order placed:', result);
+            // Call API
+            const result = await firstValueFrom(this.medicareService.placeOrder(''));
+            console.log('Order placed:', result);
 
-    this.messageService.add({ summary: 'Order successfully placed!', severity: 'success', life: 3000 });
+            this.messageService.add({ summary: 'Order successfully placed!', severity: 'success', life: 3000 });
 
-    // Optionally clear the cart after successful order
-    this.cartItems.set([]);
-
-  } catch (error) {
-    console.error('Order placement failed', error);
-    this.messageService.add({ summary: 'Failed to place order', severity: 'error', life: 3000 });
-  }
-}
+            // Optionally clear the cart after successful order
+            this.cartItems.set([]);
+        } catch (error) {
+            console.error('Order placement failed', error);
+            this.messageService.add({ summary: 'Failed to place order', severity: 'error', life: 3000 });
+        }
+    }
 }
