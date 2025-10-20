@@ -13,7 +13,16 @@ import { MedicareService } from '../service/medicare.service';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [FormsModule, InputTextModule, ButtonModule, RouterModule, InputGroupModule, InputGroupAddonModule, ToastModule, InputOtpModule],
+    imports: [
+        FormsModule,
+        InputTextModule,
+        ButtonModule,
+        RouterModule,
+        InputGroupModule,
+        InputGroupAddonModule,
+        ToastModule,
+        InputOtpModule
+    ],
     providers: [MessageService, MedicareService],
     styles: `
         ::ng-deep .p-inputtext {
@@ -35,7 +44,15 @@ import { MedicareService } from '../service/medicare.service';
                             <p-inputgroup-addon>
                                 <i class="pi pi-phone"></i>
                             </p-inputgroup-addon>
-                            <input type="tel" maxlength="10" pattern="[0-9]*" inputmode="numeric" [(ngModel)]="phone" placeholder="Enter mobile number" class="p-inputtext p-component w-full" />
+                            <input
+                                type="tel"
+                                maxlength="10"
+                                pattern="[0-9]*"
+                                inputmode="numeric"
+                                [(ngModel)]="phone"
+                                placeholder="Enter mobile number"
+                                class="p-inputtext p-component w-full"
+                            />
                         </p-inputgroup>
                     </div>
 
@@ -51,8 +68,10 @@ import { MedicareService } from '../service/medicare.service';
 
                     <p-button label="Verify" [disabled]="!otp || otp.toString().length !== 6" styleClass="w-full" (click)="verifyOtp()"></p-button>
 
-                    <div class="text-center mt-4">
-                        <a href="#" class="text-blue-600 hover:underline" (click)="resend($event)">Resend / Change Number</a>
+                    <!-- Resend & Change number -->
+                    <div class="text-center mt-4 flex flex-col gap-2">
+                        <a href="#" class="text-blue-600 hover:underline" (click)="resendOtp($event)">Resend OTP</a>
+                        <a href="#" class="text-gray-600 hover:underline" (click)="changeNumber($event)">Change Number</a>
                     </div>
                 }
             </div>
@@ -74,9 +93,9 @@ export class Login {
             return;
         }
 
-        const fullPhone = `+91${this.phone}`; // <-- add country code
+        const fullPhone = `+91${this.phone}`;
 
-        // Admin bypass: directly go to OTP step without API
+        // Admin bypass
         if (this.phone === '1111111111') {
             this.showMessage('Admin detected! Enter OTP', 'success');
             this.step.set('otp');
@@ -98,7 +117,7 @@ export class Login {
             return;
         }
 
-        const fullPhone = `+91${this.phone}`; // <-- add country code
+        const fullPhone = `+91${this.phone}`;
 
         // Admin bypass
         if (this.phone === '1111111111' && this.otp === '111111') {
@@ -117,15 +136,23 @@ export class Login {
         });
     }
 
-    resend(event: Event) {
+    resendOtp(event: Event) {
+        event.preventDefault();
+
+        const fullPhone = `+91${this.phone}`;
+        this.authService.sendOtp(fullPhone).subscribe({
+            next: () => this.showMessage('OTP resent successfully!', 'success'),
+            error: () => this.showMessage('Failed to resend OTP', 'error')
+        });
+    }
+
+    changeNumber(event: Event) {
         event.preventDefault();
         this.otp = '';
-        this.phone = '';
         this.step.set('login');
     }
 
     private showMessage(summary: string, severity: 'success' | 'error') {
-        // Ensures p-toast is initialized before calling
         setTimeout(() => {
             this.messageService.add({ severity, summary, life: 3000 });
         });
