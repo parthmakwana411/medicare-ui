@@ -138,7 +138,7 @@ export class Login {
 
     resendOtp(event: Event) {
         event.preventDefault();
-
+        this.otp = '' ;
         const fullPhone = `+91${this.phone}`;
         this.authService.sendOtp(fullPhone).subscribe({
             next: () => this.showMessage('OTP resent successfully!', 'success'),

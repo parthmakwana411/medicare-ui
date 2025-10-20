@@ -100,6 +100,8 @@ interface CartItem {
     `
 })
 export class Cart implements OnInit {
+    previousQuantities = new Map<string, number>();
+
     constructor(public router: Router) {}
 
     messageService = inject(MessageService);
@@ -113,9 +115,14 @@ export class Cart implements OnInit {
 
     async ngOnInit() {
         try {
-            // Fetch current cart from backend
             const data: any = await firstValueFrom(this.medicareService.getCart());
-            this.cartItems.set(data.cart || []);
+            const items = data.cart || [];
+            this.cartItems.set(items);
+
+            // Store initial quantities
+            items.forEach((item: CartItem) => {
+                this.previousQuantities.set(item.id, item.quantity);
+            });
         } catch (error) {
             console.error('Failed to fetch cart', error);
         }
@@ -159,13 +166,30 @@ export class Cart implements OnInit {
     }
 
     updateCart(item: CartItem) {
-        if (item.quantity <= 0) {
+        const prevQty = this.previousQuantities.get(item.id) ?? item.quantity;
+        const newQty = item.quantity;
+
+        // Detect increment or decrement
+        if (newQty > prevQty) {
+            this.medicareService.addToCart(Number(item.id), +1).subscribe({
+                next: (res) => console.log('Incremented item:', res),
+                error: (err) => console.error('Failed to increment cart', err)
+            });
+        } else if (newQty < prevQty) {
+            this.medicareService.addToCart(Number(item.id), -1).subscribe({
+                next: (res) => console.log('Decremented item:', res),
+                error: (err) => console.error('Failed to decrement cart', err)
+            });
+        }
+
+        // If quantity becomes 0, remove from cart visually
+        if (newQty <= 0) {
             this.cartItems.update((prev) => prev.filter((p) => p.id !== item.id));
         }
-        this.medicareService.addToCart(Number(item.id), item.quantity).subscribe({
-            next: (res) => console.log('Cart updated:', res),
-            error: (err) => console.error('Failed to update cart', err)
-        });
+
+        // Update local state tracking
+        this.previousQuantities.set(item.id, newQty);
+        this.cartItems.set([...this.cartItems()]);
     }
 
     totalAmount() {
@@ -176,12 +200,12 @@ export class Cart implements OnInit {
         if (this.cartItems().length === 0) return;
         const userDetails = await firstValueFrom(this.medicareService.getUserDetails());
 
-        if ( !userDetails?.user?.name || !userDetails?.user?.email || !userDetails?.user?.address ) {
+        if (!userDetails?.user?.name || !userDetails?.user?.email || !userDetails?.user?.address) {
             this.messageService.add({ summary: 'Please update the user details !', severity: 'success', life: 3000 });
             this.router.navigate(['/account']);
-            return
+            return;
         }
-        
+
         try {
             // Prepare order payload
 
