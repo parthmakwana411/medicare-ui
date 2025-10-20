@@ -3,68 +3,76 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class MedicareService {
-  private baseUrl = 'https://medicare-be.vercel.app';
+    private baseUrl = 'https://medis.theshreemultiservices.com';
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  /** ===================== AUTH ===================== **/
+    /** ===================== AUTH ===================== **/
 
-  sendOtp(phone_number: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/send-otp`, { phone_number });
-  }
+    sendOtp(phone_number: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/send-otp`, { phone_number });
+    }
 
-  verifyOtp(phone_number: string, otp: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/verify-otp`, { phone_number, otp });
-  }
+    verifyOtp(phone_number: string, otp: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/verify-otp`, { phone_number, otp });
+    }
 
-  /** ===================== PRODUCTS ===================== **/
+    /** ===================== PRODUCTS ===================== **/
 
-  getProducts(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products`);
-  }
+    getProducts(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/products`);
+    }
 
-  /** ===================== CART ===================== **/
+    /** ===================== CART ===================== **/
 
-  addToCart(product_id: number, quantity: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/cart/add`, { product_id, quantity });
-  }
+    addToCart(product_id: number, quantity: number): Observable<any> {
+        return this.http.post(`${this.baseUrl}/cart/add`, { product_id, quantity });
+    }
 
-  getCart(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cart`);
-  }
+    getCart(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/cart`);
+    }
 
-  /** ===================== USER ===================== **/
+    /** ===================== USER ===================== **/
 
-  getUserDetails(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user/details`);
-  }
+    getUserDetails(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/user/details`);
+    }
 
-  saveUserDetails(name: string, email: string, address: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/user/details`, { name, email, address });
-  }
+    saveUserDetails(name: string, email: string, address: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/user/details`, { name, email, address });
+    }
 
-  /** ===================== ORDER ===================== **/
+    /** ===================== ORDER ===================== **/
 
-  placeOrder(order: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/order/place`, order);
-  }
+    placeOrder(order: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/order/place`, order);
+    }
 
-  getOrders(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/orders`);
-  }
+    getOrders(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/orders`);
+    }
 
-  updateOrderStatus(order_id: string, status: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/order/update-status/${order_id}`, { status });
-  }
+    getOrdersForAdmin(): Observable<any> {
+        return this.http.get(`${this.baseUrl}/admin/orders`);
+    }
 
-  sendDeliveryOtp(order_id: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/order/send-delivery-otp/${order_id}`, {});
-  }
+    updateOrderStatus(order_id: string, status: string): Observable<any> {
+        return this.http.post(
+            `${this.baseUrl}/order/update-status/${order_id}`,
+            {}, // empty body
+            { params: { status } } // status passed as query param
+        );
+    }
 
-  verifyDelivery(order_id: string, otp: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/order/verify-delivery`, { order_id, otp });
-  }
+    sendDeliveryOtp(order_id: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/order/send-delivery-otp/${order_id}`, {});
+    }
+
+    verifyDelivery(order_id: string, otp: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}/order/verify-delivery`, { order_id, otp });
+    }
 }

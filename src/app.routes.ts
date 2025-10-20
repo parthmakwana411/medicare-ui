@@ -8,7 +8,9 @@ import { MedicineCategory } from '@/pages/dashboard/medicine.category';
 import { Cart } from '@/pages/dashboard/cart';
 import { OrdersListComponent } from '@/pages/dashboard/orders';
 import { AccountComponent } from '@/pages/dashboard/account';
+import { authGuard } from '@/pages/auth/auth.guard';
 import { AdminDashboard } from '@/pages/dashboard/admindashboard';
+import { OrdersPageComponent } from '@/pages/dashboard/oreders-page';
 
 export const appRoutes: Routes = [
     {
@@ -16,18 +18,20 @@ export const appRoutes: Routes = [
         component: AppLayout,
         children: [
             { path: '', component: Dashboard },
+            { path: 'admin-dashboard', component: AdminDashboard },
+            { path: 'order-details', component: OrdersPageComponent },
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
             { path: 'category', component: MedicineCategory },
-            { path: 'cart', component: Cart },
-            { path: 'orders', component: OrdersListComponent },
-            { path: 'account', component: AccountComponent },
-            { path: 'admin-dashboard', component: AdminDashboard },
+            { path: 'cart', component: Cart, canActivate: [authGuard] },           // protected
+            { path: 'orders', component: OrdersListComponent, canActivate: [authGuard] }, // protected
+            { path: 'account', component: AccountComponent, canActivate: [authGuard] },   // protected
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
         ]
     },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
-    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') }, // login/register pages
+    { path: '**', redirectTo: '/notfound' } // wildcard route
 ];
+
