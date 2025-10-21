@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class MedicareService {
-    private baseUrl = 'https://medis.theshreemultiservices.com';
+    private baseUrl = 'https://med.theshreemultiservices.com';
 
     constructor(private http: HttpClient) {}
 
